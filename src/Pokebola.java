@@ -10,7 +10,4 @@ public abstract class Pokebola {
         this.botao_central = botao_central;
     }
 
-
-
-
 }
