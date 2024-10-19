@@ -1,5 +1,6 @@
-import PokemonTipo.PokemonTipo;
+package Pokemon;
 
+import PokemonTipo.PokemonTipo;
 import java.util.Objects;
 
 public class Pokemon {
@@ -127,9 +128,10 @@ public class Pokemon {
         System.out.println("Velocidade: " + this.velocidade);
     }
 
-    public void atacar(Pokemon pokemon_inimigo) {
+    public boolean atacar(Pokemon pokemon_inimigo) {
 
         int dano_ataque = ataque;
+        System.out.println(this.getName() + " ataca!");
 
         for (int i = 0; i < this.tipo.length; i++) {
             for (int j = 0; j < this.tipo[i].getVantagens().size(); j++) {
@@ -138,8 +140,8 @@ public class Pokemon {
                     for (int l = 0; l < pokemon_inimigo.tipo[k].getFraquezas().size(); l++) {
 
                         if (Objects.equals(this.tipo[i].getVantagem(j), pokemon_inimigo.tipo[k].getFraqueza(l))) {
-                            System.out.printf("vantagem de "+ this.name + ": " + this.tipo[i].getVantagem(j) + ". Fraqueza de " + pokemon_inimigo.name + " " + pokemon_inimigo.tipo[k].getFraqueza(l) + ". ");
-                            System.out.println("dano_ataque_atual: " + dano_ataque + " novo_dano_ataque (dano_ataque * 2) : " + dano_ataque * 2);
+                            System.out.println("vantagem de "+ this.name + " " + this.tipo[i].getVantagem(j) + " fraqueza de " + pokemon_inimigo.name);
+                            //System.out.println("dano_ataque_atual: " + dano_ataque + " novo_dano_ataque (dano_ataque * 2) : " + dano_ataque * 2);
                             dano_ataque = dano_ataque * 2;
                         }
                     }
@@ -174,6 +176,19 @@ public class Pokemon {
             }
         }
 
+
+
+
+
+        if (pokemon_inimigo.getHp() - dano_ataque <= 0) {
+            System.out.println("Dano causado " + dano_ataque + ". ");
+            System.out.println(this.getName() + " venceu a luta");
+            return true;
+        }
+
+        System.out.println("Dano causado " + dano_ataque + ". " + (pokemon_inimigo.getHp() - dano_ataque) +" de hp de " + pokemon_inimigo.getName() + " restante");
+
         pokemon_inimigo.setHp(pokemon_inimigo.getHp() - dano_ataque);
+        return false;
     }
 }
